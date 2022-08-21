@@ -26,7 +26,7 @@ export default class ReduxPage extends Component {
   render() {
     return (
       <div>
-        <h3>{store.getState()}</h3>
+        <h3>{store.getState().count}</h3>
         <button onClick={this.add}>加</button>
         <button onClick={this.delete}>减</button>
       </div>
