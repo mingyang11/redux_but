@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 // import thunk from 'redux-thunk';
 // import logger from 'redux-logger';
 
-function countReducer(state = 0, action) {
+export function countReducer(state = 0, action) {
   switch (action.type) {
     case 'ADD':
       return state + 1;
