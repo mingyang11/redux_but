@@ -13,7 +13,7 @@ export default function applyMiddleware(...middlewares) {
       //   拿到dispatch
       let dispatch = store.dispatch;
       //   将
-      const midApi = {
+      const middleApi = {
         getState: store.getState,
         // 这里不能直接使用dispatch,因为如果直接使用dispatch则使用的是上面原版的dipatch，且每次中间件执行的时候都是原版的dipathc
         // 起不了加强的作用(原理是上一个中间件执行完成之后应该将执行过的dispatch传递给下一个中间件，而不是每次都传递新的dispatch进去)
@@ -23,7 +23,7 @@ export default function applyMiddleware(...middlewares) {
 
       //   生成加强版的中间件函数，使中间件拿到权限，不然他执行啥的？
       const middleWareChain = middlewares.map((middleware) =>
-        middleware(midApi)
+        middleware(middleApi)
       );
       //  加强版的dispatch
       // 把所有的加强版的中间件函数都执行了。

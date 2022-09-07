@@ -52,7 +52,10 @@ const store = createStore(
   combineReducers({
     count: countReducer,
   }),
-  applyMiddleware(thunk, logger)
+  applyMiddleware(
+    thunk
+    // logger
+  )
 );
 
 export default store;
