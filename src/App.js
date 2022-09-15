@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <ReduxPage />
       <HooksPage />
-      <ReactReduxPage />
+      <ReactReduxPage omg={0} />
     </div>
   );
 }
