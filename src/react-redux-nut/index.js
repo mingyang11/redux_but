@@ -1,4 +1,11 @@
-import React, { useLayoutEffect, useReducer } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useReducer,
+  useState,
+} from 'react';
+import { bindActionCreators } from '../redux-nut';
 import store from '../store';
 
 // context跨组件传值
@@ -19,9 +26,14 @@ const connect =
   (mapStateToProps, mapDispatchToProps) => (WrappedComponent) => (props) => {
     const { getState, dispatch, subscribe } = store;
     const stateProps = mapStateToProps(getState());
-    const dispatchProps = { dispatch };
+    let dispatchProps = { dispatch };
+    const forceUpdate = useForceUpdate();
 
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    if (typeof mapDispatchToProps === 'function') {
+      dispatchProps = mapDispatchToProps(dispatch);
+    } else if (typeof mapDispatchToProps === 'object') {
+      dispatchProps = bindActionCreators(mapDispatchToProps, dispatch);
+    }
     useLayoutEffect(() => {
       const unsubscribe = subscribe(() => {
         forceUpdate();
@@ -29,9 +41,39 @@ const connect =
       return () => {
         unsubscribe();
       };
-    }, []);
-    console.log(stateProps, 'stateProps');
+    }, [subscribe]);
     return <WrappedComponent {...props} {...stateProps} {...dispatchProps} />;
   };
 
-export { Provider, connect };
+const useForceUpdate = () => {
+  const [state, setState] = useState(0);
+  const update = useCallback(() => {
+    setState((prev) => prev + 1);
+  }, []);
+  return update;
+};
+
+const useSelector = (selector) => {
+  const store = useContext(Context);
+  const forceUpdate = useForceUpdate();
+
+  const { getState, subscribe } = store;
+  const selectedState = selector(getState());
+
+  useLayoutEffect(() => {
+    const unsubscribe = subscribe(() => {
+      forceUpdate();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [subscribe]);
+
+  return selectedState;
+};
+const useDispatch = () => {
+  const store = useContext(Context);
+  const { dispatch } = store;
+  return dispatch;
+};
+export { Provider, connect, useDispatch, useSelector };
