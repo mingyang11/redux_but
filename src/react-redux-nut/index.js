@@ -58,7 +58,12 @@ const useSelector = (selector) => {
   const forceUpdate = useForceUpdate();
 
   const { getState, subscribe } = store;
-  const selectedState = selector(getState());
+  let selectedState;
+  if (selector) {
+    selectedState = selector(getState());
+  } else {
+    selectedState = getState();
+  }
 
   useLayoutEffect(() => {
     const unsubscribe = subscribe(() => {
