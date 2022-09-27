@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 聚合函数
+      function compose(...funcs) {
+        if (!funcs.length) {
+          return (args) => {
+            return args;
+          };
+        }
+        if (funcs.length === 1) {
+          return funcs[0];
+        }
+        return funcs.reverse().reduce((a, b) => {
+          return (args) => b(a(args));
+        });
+      }
+      function a(aa) {
+        return aa;
+      }
+      function b(bb) {
+        return bb;
+      }
+      function c(cc) {
+        return cc;
+      }
+      const values = compose()(12);
+      console.log(values, 'values');
+    </script>
+  </body>
+</html>

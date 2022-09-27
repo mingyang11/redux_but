@@ -1,5 +1,9 @@
-// todo 中间件的先放一下
+// 接收两个参数，一个是reducer，一个是applyMiddleware的执行结果，传的是中间件
 function createStore(reducer, enhancer) {
+  // TODO enhancer加强的是dispatch，而dispatch是来自于creastore，所以下面要这样写，反正我还不懂
+  if (enhancer) {
+    enhancer(createStore)(reducer);
+  }
   // 初始化声明一个state值，这个也可以在参数中传入，这个暂时不重要
   let currentState;
   const currentListeners = [];
