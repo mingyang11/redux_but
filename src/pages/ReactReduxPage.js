@@ -7,7 +7,6 @@ import { bindActionCreators } from '../redux-nut';
 class ReactReduxPage extends Component {
   render() {
     const { count } = this.props;
-    console.log(this.props, 'ad');
     return (
       <div>
         <h3>ReactReduxPage</h3>
