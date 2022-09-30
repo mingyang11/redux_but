@@ -15,6 +15,11 @@ class ReduxPageDemo extends React.Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+  delete = () => {
+    store.dispatch((dispa) => {
+      dispa({ type: 'DELETE' });
+    });
+  };
   render() {
     const state = store.getState();
     return (
@@ -25,14 +30,14 @@ class ReduxPageDemo extends React.Component {
             store.dispatch({ type: 'ADD' });
           }}
         >
-          加➕{state.count}
+          加➕{state.count?.count}
         </button>
         <button
           onClick={() => {
-            store.dispatch({ type: 'DELETE' });
+            this.delete();
           }}
         >
-          减➖{state.count}
+          减➖{state.count?.count}
         </button>
       </div>
     );

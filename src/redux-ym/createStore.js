@@ -2,7 +2,7 @@
 function createStore(reducer, enhancer) {
   // TODO enhancer加强的是dispatch，而dispatch是来自于creastore，所以下面要这样写，反正我还不懂
   if (enhancer) {
-    enhancer(createStore)(reducer);
+    return enhancer(createStore)(reducer);
   }
   // 初始化声明一个state值，这个也可以在参数中传入，这个暂时不重要
   let currentState;
