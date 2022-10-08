@@ -47,7 +47,8 @@ function thunk({ dispatch, getState }) {
 }
 
 const store = createStore(
-  combineReducers({ count: reducer }),
+  // combineReducers({ count: reducer }),
+  reducer,
   applyMiddleware(thunk)
 );
 
