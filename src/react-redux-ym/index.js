@@ -56,11 +56,41 @@ function connect(mapStateToProps, mapDispatchToProps) {
 }
 
 const useForceUpdate = () => {
-  const [state, setState] = useState(0);
+  const [_, setState] = useState(0);
   const update = useCallback(() => {
     setState((prev) => prev + 1);
   }, []);
   return update;
 };
 
-export { Provider, connect };
+// useSelector获取state
+const useSelector = (selector) => {
+  const { getState, subscribe } = store;
+  const forceUpdate = useForceUpdate();
+  let selectedState;
+  if (selector) {
+    selectedState = selector(getState());
+  } else {
+    selectedState = getState();
+  }
+
+  useLayoutEffect(() => {
+    //   这里借助初始化是将forceupdate放进createStore中的linstener中，当dispatch触发的时候就会更新该forceUpdate
+    // foceUpdate执行后机会改变state，页面机会刷新
+    const unsubscribe = subscribe(() => {
+      forceUpdate();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [subscribe]);
+
+  return selectedState;
+};
+
+const useDispatch = () => {
+  const { dispatch } = store;
+  return dispatch;
+};
+
+export { Provider, connect, useDispatch, useSelector };
