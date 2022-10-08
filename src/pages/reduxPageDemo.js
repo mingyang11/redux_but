@@ -1,4 +1,5 @@
 import React from 'react';
+import UseReduceDemo from './reduceDemo';
 import store from '../store-ym';
 
 // 单独使用store时由于不是props值或者state值发生改变，因此不会执行渲染，这是需要用到方法this.forceUpdate来进行强制渲染
@@ -39,6 +40,8 @@ class ReduxPageDemo extends React.Component {
         >
           减➖{state.count?.count}
         </button>
+        <br />
+        <UseReduceDemo />
       </div>
     );
   }

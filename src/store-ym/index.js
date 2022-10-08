@@ -48,7 +48,7 @@ function thunk({ dispatch, getState }) {
 
 const store = createStore(
   combineReducers({ count: reducer }),
-  applyMiddleware(logger, thunk)
+  applyMiddleware(thunk)
 );
 
 export default store;

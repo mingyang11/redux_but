@@ -16,14 +16,13 @@ export default function applyMiddleware(...middlewares) {
       };
       // 生成加强版的中间件函数，使中间件拿到权限，不然它执行啥
       const middleWareChain = middlewares.map((middleware) => {
-        console.log(middleware(middleApi), '42');
         return middleware(middleApi);
       });
       //  加强版的dispatch
       // 把所有的加强版的中间件函数都执行了。
       //   同时还执行了store.dispatch(原版的dispatch)，修改store值还是想要使用原版的dispatch来进行修改
       dispatch = compose(...middleWareChain)(store.dispatch);
-      console.log(compose(...middleWareChain)(store.dispatch));
+      // console.log(compose(...middleWareChain)(store.dispatch));
       return { ...store, dispatch };
     };
   };
