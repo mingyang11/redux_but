@@ -41,7 +41,7 @@ function connect(mapStateToProps, mapDispatchToProps) {
 
       useLayoutEffect(() => {
         //   这里借助初始化是将forceupdate放进createStore中的linstener中，当dispatch触发的时候就会更新该forceUpdate
-        // foceUpdate执行后机会改变state，页面机会刷新1
+        // foceUpdate执行后机会改变state，页面机会刷新
         const unsubscribe = subscribe(() => {
           forceUpdate();
         });
