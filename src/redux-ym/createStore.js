@@ -19,6 +19,7 @@ function createStore(reducer, enhancer) {
     currentListeners.forEach((listener) => {
       listener();
     });
+    return action;
   }
 
   //  订阅，感觉只有单独使用的时候这个函数才有作用，配合react-redux使用的时候就没啥用了
